@@ -1,29 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ElementsService } from '../../services/elements.service';
 import { PeriodicElement } from '../../models/element.model';
-import { MatTableModule } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-elements-table',
   standalone: true,
-  imports: [MatTableModule, NgFor],
+  imports: [MatTableModule, MatInputModule, MatFormFieldModule, NgFor],
   templateUrl: './elements-table.component.html',
   styleUrl: './elements-table.component.scss'
 })
-export class ElementsTableComponent implements OnInit {
+export class ElementsTableComponent {
   elementsData: PeriodicElement[] = [];
+  dataSource: MatTableDataSource<PeriodicElement>;
   columnsToDisplay: string[] = ['position', 'name', 'weight', 'symbol'];
-  headersToDisplay: string[] = ['Number', 'Name', 'Weight', 'Symbol'];
 
   constructor(private elementsService: ElementsService) {
-
+    this.dataSource = new MatTableDataSource(this.elementsService.getElements());
   };
 
-  ngOnInit(): void {
-    this.getElements();
-    console.log(this.elementsData)
-  }
 
   getElements(): void {
     this.elementsData = this.elementsService.getElements();
@@ -37,5 +35,10 @@ export class ElementsTableComponent implements OnInit {
       case 'symbol': return 'Symbol';
       default: return "";
     }
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 }

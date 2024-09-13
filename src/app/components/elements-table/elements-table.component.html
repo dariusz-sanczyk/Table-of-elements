@@ -1,4 +1,4 @@
-<table mat-table [dataSource]="elementsData">
+<table mat-table [dataSource]="dataSource">
   <ng-container
     matColumnDef="{{ column }}"
     *ngFor="let column of columnsToDisplay"
@@ -9,3 +9,12 @@
   <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
   <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
 </table>
+<mat-form-field>
+  <mat-label>Filter</mat-label>
+  <input
+    matInput
+    (keyup)="applyFilter($event)"
+    placeholder="E.g. 'He' or 4.00"
+    #input
+  />
+</mat-form-field>
