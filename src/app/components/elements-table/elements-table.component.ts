@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ElementsService } from '../../services/elements.service';
 import { PeriodicElement } from '../../models/element.model';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -7,6 +7,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { NgFor } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { EditDialogComponent } from '../edit-dialog/edit-dialog.component';
 
 @Component({
   selector: 'app-elements-table',
@@ -19,6 +21,7 @@ export class ElementsTableComponent {
   public dataSource: MatTableDataSource<PeriodicElement>;
   public columnsToDisplay: string[] = ['position', 'name', 'weight', 'symbol'];
   public inputControl = new FormControl();
+  readonly dialog = inject(MatDialog);
 
   constructor(private elementsService: ElementsService) {
     this.dataSource = new MatTableDataSource(this.elementsService.getElements());
@@ -29,7 +32,7 @@ export class ElementsTableComponent {
       });
   };
 
-  getColumnName(column: string): string {
+  public getColumnName(column: string): string {
     switch (column) {
       case 'position': return 'Number';
       case 'name': return 'Name';
@@ -39,7 +42,20 @@ export class ElementsTableComponent {
     }
   };
 
-  applyFilter(value: string) {
+  private applyFilter(value: string) {
     this.dataSource.filter = value.trim().toLowerCase();
+  }
+
+  public openEditDialog(column: string, element: PeriodicElement) {
+    console.log(column);
+    console.log(element);
+    const dialogRef = this.dialog.open(EditDialogComponent, {
+      data: { column, element }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed', result);
+
+    });
   }
 };
