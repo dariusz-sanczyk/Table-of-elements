@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { InputData } from '../../models/input-data.model';
 import { NgIf } from '@angular/common';
+import { InputStateMatcher } from '../../utils/ErrorStateMatcher';
 
 @Component({
   selector: 'app-edit-dialog',
@@ -29,6 +30,7 @@ export class EditDialogComponent implements OnInit {
   public value!: string | number;
   public valueType: string = '';
   public inputForm!: FormGroup;
+  matcher = new InputStateMatcher();
 
   constructor(private fb: FormBuilder) {}
 

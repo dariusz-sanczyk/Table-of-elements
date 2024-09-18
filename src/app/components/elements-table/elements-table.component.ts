@@ -52,7 +52,7 @@ export class ElementsTableComponent {
     });
 
     dialogRef.afterClosed().subscribe(value => {
-      this.elementsService.updateElement(column, element, value)
+      value && this.elementsService.updateElement(column, element, value)
     });
   }
 };

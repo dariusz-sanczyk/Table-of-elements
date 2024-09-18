@@ -24,13 +24,12 @@ export class ElementsService {
 
   public getElements(): PeriodicElement[] {
     return this.ELEMENT_DATA;
-  }
+  };
 
-  public updateElement(column: string, element: PeriodicElement, value: string | number) {
-    console.log(column);
-    console.log(element);
-    console.log(value);
-
-
-  }
-}
+  public updateElement(column: string, element: PeriodicElement, newValue: string | number) {
+    const targetElement = this.ELEMENT_DATA.find(el => el === element);
+    if (targetElement) {
+      targetElement[column] = newValue;
+    };
+  };
+};
