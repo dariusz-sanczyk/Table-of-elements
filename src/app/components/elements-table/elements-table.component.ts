@@ -20,12 +20,12 @@ import { EditDialogComponent } from '../edit-dialog/edit-dialog.component';
 export class ElementsTableComponent {
   public dataSource: MatTableDataSource<PeriodicElement>;
   public columnsToDisplay: string[] = ['position', 'name', 'weight', 'symbol'];
-  public inputControl = new FormControl();
+  public filterControl = new FormControl();
   readonly dialog = inject(MatDialog);
 
   constructor(private elementsService: ElementsService) {
     this.dataSource = new MatTableDataSource(this.elementsService.getElements());
-    this.inputControl.valueChanges
+    this.filterControl.valueChanges
       .pipe(debounceTime(2000))
       .subscribe((value: string) => {
         this.applyFilter(value);
@@ -42,11 +42,11 @@ export class ElementsTableComponent {
     }
   };
 
-  private applyFilter(value: string) {
+  private applyFilter(value: string): void {
     this.dataSource.filter = value.trim().toLowerCase();
   }
 
-  public openEditDialog(column: string, element: PeriodicElement) {
+  public openEditDialog(column: string, element: PeriodicElement): void {
     const dialogRef = this.dialog.open(EditDialogComponent, {
       data: { column, element }
     });

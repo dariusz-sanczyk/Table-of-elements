@@ -26,7 +26,7 @@ export class ElementsService {
     return this.ELEMENT_DATA;
   };
 
-  public updateElement(column: string, element: PeriodicElement, newValue: string | number) {
+  public updateElement(column: string, element: PeriodicElement, newValue: string | number): void {
     const targetElement = this.ELEMENT_DATA.find(el => el === element);
     if (targetElement) {
       targetElement[column] = newValue;
