@@ -47,15 +47,12 @@ export class ElementsTableComponent {
   }
 
   public openEditDialog(column: string, element: PeriodicElement) {
-    console.log(column);
-    console.log(element);
     const dialogRef = this.dialog.open(EditDialogComponent, {
       data: { column, element }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed', result);
-
+    dialogRef.afterClosed().subscribe(value => {
+      this.elementsService.updateElement(column, element, value)
     });
   }
 };

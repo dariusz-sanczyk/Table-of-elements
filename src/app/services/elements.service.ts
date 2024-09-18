@@ -22,7 +22,15 @@ export class ElementsService {
     { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
   ];
 
-  getElements(): PeriodicElement[] {
+  public getElements(): PeriodicElement[] {
     return this.ELEMENT_DATA;
+  }
+
+  public updateElement(column: string, element: PeriodicElement, value: string | number) {
+    console.log(column);
+    console.log(element);
+    console.log(value);
+
+
   }
 }
