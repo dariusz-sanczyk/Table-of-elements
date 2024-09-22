@@ -1,4 +1,4 @@
-# AtiperaTask
+# Table of Elements
 
 Simple view to display table of given elements
 
