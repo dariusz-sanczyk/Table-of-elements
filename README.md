@@ -6,6 +6,7 @@ Technologies used:
 
      Angular 18.2.2
      Angular Material 18.2.3
+     RxAngular/state 18.0.0
 
 ## Development server
 
