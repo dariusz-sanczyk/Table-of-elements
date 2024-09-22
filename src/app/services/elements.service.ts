@@ -1,13 +1,17 @@
 import { Injectable } from '@angular/core';
 import { PeriodicElement } from '../models/element.model';
+import { RxState } from '@rx-angular/state';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class ElementsService {
+  private readonly _state = new RxState<{ elements: PeriodicElement[] }>();
+  public elements$ = this._state.select('elements');
 
-  constructor() {}
+  constructor() {
+    this._state.set({ elements: this.ELEMENT_DATA });
+  }
 
   private ELEMENT_DATA: PeriodicElement[] = [
     { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
@@ -22,14 +26,12 @@ export class ElementsService {
     { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
   ];
 
-  public getElements(): PeriodicElement[] {
-    return this.ELEMENT_DATA;
-  };
-
   public updateElement(column: string, element: PeriodicElement, newValue: string | number): void {
-    const targetElement = this.ELEMENT_DATA.find(el => el === element);
-    if (targetElement) {
-      targetElement[column] = newValue;
-    };
-  };
-};
+    this._state.set(({ elements }) => {
+      const updatedElements = elements.map((el) =>
+        el.position === element.position ? { ...el, [column]: newValue } : el
+      );
+      return { elements: updatedElements };
+    });
+  }
+}

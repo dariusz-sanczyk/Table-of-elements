@@ -4,8 +4,8 @@ Simple view to display table of given elements
 
 Technologies used:
 
-    - Angular 18.2.2
-    - Angular Material 18.2.3
+     Angular 18.2.2
+     Angular Material 18.2.3
 
 ## Development server
 

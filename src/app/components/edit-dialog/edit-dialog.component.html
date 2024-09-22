@@ -21,7 +21,7 @@
         [errorStateMatcher]="matcher"
       />
       <mat-error *ngIf="!inputForm.valid"
-        >You must pass a string value.</mat-error
+        >You must pass a string value (only letters allowed).</mat-error
       >
     </mat-form-field>
     <mat-form-field *ngIf="data.column === 'weight'">
@@ -43,7 +43,8 @@
         [errorStateMatcher]="matcher"
       />
       <mat-error *ngIf="!inputForm.valid"
-        >You must pass a string value with 2 characters max.</mat-error
+        >You must pass a string value with 2 characters max (only letters
+        allowed).</mat-error
       >
     </mat-form-field>
   </form>
